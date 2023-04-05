@@ -1,12 +1,25 @@
-// var groupAnagrams = (array) => {
-//     return array.split(' ')
-    
-// }
+var groupAnagrams = (words, map = new Map()) => {
+    if(!words.length) return [];
 
-// function invert(word) {
-//     return word.split('').reverse('').join('');
-// }
+    groupWords(words, map);
+
+    return [...map.values()];
 
 
+}
 
-// console.log(groupAnagrams(["eat","tea","tan","ate","nat","bat"]));
+var groupWords = (words, map) => {
+    for(const original of words){
+        const sorted = reorder(original);
+        const values = map.get(sorted) || [];
+        
+        values.push(original);
+        map.set(sorted, values)
+    }
+}
+
+var reorder = (str) => str.split('').sort((a, b) => a.localeCompare(b)).join('');
+
+console.log(groupAnagrams(["eat","tea","tan","ate","nat","bat"]));
+
+// console.log(groupWords(["eat","tea","tan","ate","nat","bat"]));
